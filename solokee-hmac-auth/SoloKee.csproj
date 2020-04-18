@@ -64,7 +64,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Src\SoloKeyWrapper.cs" />
-    <Compile Include="Src\CTAP.cs" />
     <Compile Include="Src\HMACKeyProvider.cs" />
     <Compile Include="Src\SoloKeeHmac.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

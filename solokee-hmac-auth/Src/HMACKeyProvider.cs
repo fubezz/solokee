@@ -1,7 +1,6 @@
 ﻿using System;
 
 using KeePassLib.Keys;
-using CTAP;
 using SoloKeeHmac.Src;
 
 namespace SoloKeeHmac
@@ -20,8 +19,7 @@ namespace SoloKeeHmac
 
 			SoloKeyWrapper wrapperClient = new SoloKeyWrapper();
 
-			wrapperClient.init();
-			wrapperClient.wink();
+			wrapperClient.makeCredWithHMAC();
 
 
 			return new byte[] { 0x6b, 0x65, 0x65, 0x70, 0x61, 0x73, 0x73 };
