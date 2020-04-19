@@ -3,12 +3,12 @@ using System.Windows.Forms;
 using KeePass.Plugins;
 
 
-namespace SoloKeeHmac
+namespace SoloKee
 {
-    public class SoloKeeHmacExt : Plugin
+    public class SoloKeeExt : Plugin
     {
 		private IPluginHost m_host = null;
-		private HMACKeyProvider hmacProv = new HMACKeyProvider();
+		private SoloKeyProvider hmacProv = new SoloKeyProvider();
 
 		public override bool Initialize(IPluginHost host)
 		{

@@ -2,7 +2,7 @@
 using System.Diagnostics;
 
 
-namespace SoloKeeHmac.Src
+namespace SoloKee
 {
     class SoloKeyWrapper
     {
