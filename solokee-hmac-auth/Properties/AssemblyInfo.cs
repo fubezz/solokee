@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 // Allgemeine Informationen über eine Assembly werden über die folgenden
 // Attribute gesteuert. Ändern Sie diese Attributwerte, um die Informationen zu ändern,
 // die einer Assembly zugeordnet sind.
-[assembly: AssemblyTitle("SoloKee HMAC Authentication")]
+[assembly: AssemblyTitle("SoloKee HMAC-Secret Authentication")]
 [assembly: AssemblyDescription("Adds the ability to authenticate by FIDO2 HMAC Secret extension")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Fabian Spieß")]

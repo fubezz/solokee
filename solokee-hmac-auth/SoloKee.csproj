@@ -7,8 +7,8 @@
     <ProjectGuid>{4C7EDE0C-A0D7-4347-A1FF-3862A4DE8B38}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SoloKeeHmac</RootNamespace>
-    <AssemblyName>SoloKeeHmac</AssemblyName>
+    <RootNamespace>SoloKee</RootNamespace>
+    <AssemblyName>SoloKee</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -50,6 +50,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Numerics" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
@@ -63,34 +64,46 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Src\Forms\OtpKeyCreationForm.cs">
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="src\Form\SoloKeeCreationForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Src\Forms\OtpKeyCreationForm.Designer.cs">
-      <DependentUpon>OtpKeyCreationForm.cs</DependentUpon>
+    <Compile Include="src\Form\SoloKeeCreationForm.Designer.cs">
+      <DependentUpon>SoloKeeCreationForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Src\Forms\OtpKeyPromptForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Src\Forms\OtpKeyPromptForm.Designer.cs">
-      <DependentUpon>OtpKeyPromptForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Src\SoloKeyWrapper.cs" />
-    <Compile Include="Src\HMACKeyProvider.cs" />
-    <Compile Include="Src\SoloKeeHmac.cs" />
+    <Compile Include="src\SoloKeyWrapper.cs" />
+    <Compile Include="src\SoloKeeKeyProvider.cs" />
+    <Compile Include="src\SoloKeeExt.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Src\Forms\OtpKeyCreationForm.resx">
-      <DependentUpon>OtpKeyCreationForm.cs</DependentUpon>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Src\Forms\OtpKeyPromptForm.resx">
-      <DependentUpon>OtpKeyPromptForm.cs</DependentUpon>
+    <EmbeddedResource Include="src\Form\SoloKeeCreationForm.resx">
+      <DependentUpon>SoloKeeCreationForm.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="static\usb_key.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

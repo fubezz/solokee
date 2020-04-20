@@ -4,7 +4,6 @@ using KeePass.UI;
 using KeePassLib.Keys;
 using KeePassLib.Serialization;
 using KeePassLib.Utility;
-using OtpKeyProv.Forms;
 using SoloKee;
 using SoloKee.Forms;
 
@@ -33,10 +32,7 @@ namespace SoloKee
 				return pbRet;
 			}
 			catch (Exception ex) { MessageService.ShowWarning(ex.Message); }
-
-
-
-			return new byte[] { 0x6b, 0x65, 0x65, 0x70, 0x61, 0x73, 0x73 };
+			return null;
 			
 		}
 
@@ -57,8 +53,8 @@ namespace SoloKee
 
 			if (UIUtil.ShowDialogAndDestroy(dlg) != DialogResult.OK)
 				return null;
-			//SoloKeyWrapper wrapperClient = new SoloKeyWrapper();
-			return null;
+			else
+				return new byte[] { 0x6b, 0x65, 0x65, 0x70, 0x61, 0x73, 0x73 };
 		}
 
 	}
