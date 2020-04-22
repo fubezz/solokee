@@ -111,7 +111,6 @@ namespace SoloKee.Forms
             // 
             // btn_browsePythonPath
             // 
-            this.btn_browseSoloPath.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btn_browseSoloPath.Location = new System.Drawing.Point(276, 71);
             this.btn_browseSoloPath.Name = "btn_browsePythonPath";
             this.btn_browseSoloPath.Size = new System.Drawing.Size(64, 23);
@@ -224,10 +223,6 @@ namespace SoloKee.Forms
 		private System.Windows.Forms.GroupBox grp_soloConfig;
 		private System.Windows.Forms.Label lbl_pythonPath;
 		private KeePass.UI.CustomContextMenuStripEx m_ctxMenu;
-		private System.Windows.Forms.ToolStripMenuItem m_ctxHelp;
-		private System.Windows.Forms.ToolStripSeparator m_ctxSep0;
-		private System.Windows.Forms.ToolStripMenuItem m_ctxKeyGen128;
-		private System.Windows.Forms.ToolStripMenuItem m_ctxKeyGen256;
         private System.Windows.Forms.Button btn_browseSoloPath;
         private System.Windows.Forms.Label lbl_explPython;
         private System.Windows.Forms.GroupBox grp_keygen;

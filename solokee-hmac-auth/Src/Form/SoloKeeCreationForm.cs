@@ -76,12 +76,13 @@ namespace SoloKee.Forms
 		private void OnBtnBrowse(object sender, EventArgs e)
 		{
 			var FD = new OpenFileDialog();
-		
+
 			if (FD.ShowDialog() == DialogResult.OK)
 			{
 				string fileToOpen = FD.FileName;
+				this.lbl_explPython.Text = fileToOpen;
 				Console.WriteLine(fileToOpen);
-				if (fileToOpen != null)
+				if (fileToOpen != null && fileToOpen.Contains("solo.exe")) ;
 				{
 					this.soloPath = fileToOpen;
 					this.txt_soloPath.Text = fileToOpen;
@@ -89,6 +90,7 @@ namespace SoloKee.Forms
 					UIUtil.SetFocus(this.btn_generateKey, this);
 				}
 			}
+
 		}
 
 		private void btn_generateKey_Click(object sender, EventArgs e)
