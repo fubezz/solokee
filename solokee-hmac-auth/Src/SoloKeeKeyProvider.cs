@@ -2,9 +2,7 @@
 using System.Windows.Forms;
 using KeePass.UI;
 using KeePassLib.Keys;
-using KeePassLib.Serialization;
 using KeePassLib.Utility;
-using SoloKee;
 using SoloKee.Forms;
 
 namespace SoloKee
@@ -49,12 +47,14 @@ namespace SoloKee
 			//if (otpInfo == null) otpInfo = new OtpInfo();
 
 			SoloKeeCreationForm dlg = new SoloKeeCreationForm();
+			string key = "test";
+			dlg.InitEx(key,ctx);
 			//dlg.InitEx(otpInfo, ctx);
 
 			if (UIUtil.ShowDialogAndDestroy(dlg) != DialogResult.OK)
 				return null;
 			else
-				return new byte[] { 0x6b, 0x65, 0x65, 0x70, 0x61, 0x73, 0x73 };
+				return new System.Text.UTF8Encoding().GetBytes(key);
 		}
 
 	}

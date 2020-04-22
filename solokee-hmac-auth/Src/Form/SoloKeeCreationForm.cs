@@ -22,73 +22,83 @@ using System.Windows.Forms;
 
 using KeePass.UI;
 using KeePassLib.Keys;
-using KeePassLib.Utility;
 
 namespace SoloKee.Forms
 {
 	public partial class SoloKeeCreationForm : Form
 	{
-		//private OtpInfo m_otpInfo = null;
 		private KeyProviderQueryContext m_kpContext = null;
-
-		//public void InitEx(OtpInfo otpInfo, KeyProviderQueryContext ctx)
-		//{
-		//	m_otpInfo = otpInfo;
-		//	m_kpContext = ctx;
-		//}
+		private string soloPath = null;
+		private string Text = null;
+		private string key = null;
 
 		public SoloKeeCreationForm()
 		{
 			InitializeComponent();
 		}
 
+		public void InitEx (string key, KeyProviderQueryContext ctx)
+		{
+			m_kpContext = ctx;
+			this.key = key;
+
+		}
+
 		private void OnFormLoad(object sender, EventArgs e)
 		{
-			//if(m_otpInfo == null) throw new InvalidOperationException();
-
 			GlobalWindowManager.AddWindow(this);
-			//OtpKeyProvExt.ConfigureHelpMenuItem(m_ctxHelp);
-			UIUtil.SetFocus(text_pythonPath, this);
+
+
+			string strTitle = "Configure SoloKee Keyprovider";
+			string strDesc = "Protect the database with your solo key.";
+			Console.WriteLine(strTitle);
+
+			this.Text = strTitle;
+			BannerFactory.CreateBannerEx(this, m_bannerImage,
+				null, strTitle, strDesc);
+
+			UIUtil.SetFocus(txt_soloPath, this);
 		}
 
 		private void OnFormClosed(object sender, FormClosedEventArgs e)
 		{
+			Console.WriteLine("Closing window");
 			GlobalWindowManager.RemoveWindow(this);
 		}
 
 		
 		private void OnBtnOK(object sender, EventArgs e)
 		{
-			//byte[] pbSecret = ParseSecret();
-			//ulong? uCounter = ParseCounter();
-			if((null == null) )
-			{
-				MessageService.ShowWarning("Please enter valid values for the OTP secret and the counter!");
-
-				this.DialogResult = DialogResult.None;
-				return;
-			}
-
-			//m_otpInfo.OtpLength = (uint)m_numOtpLen.Value;
-			//m_otpInfo.OtpsRequired = (uint)m_numOtpsReq.Value;
-			//m_otpInfo.LookAheadCount = (uint)m_numLookAhead.Value;
-
-			//m_otpInfo.Secret = pbSecret;
-			//m_otpInfo.Counter = uCounter.Value;
-		}
-
-
-		private void GenerateKey()
-		{
+			
 			
 		}
 
-		private void m_grpData_Enter(object sender, EventArgs e)
+		private void OnBtnBrowse(object sender, EventArgs e)
 		{
-
+			var FD = new OpenFileDialog();
+		
+			if (FD.ShowDialog() == DialogResult.OK)
+			{
+				string fileToOpen = FD.FileName;
+				Console.WriteLine(fileToOpen);
+				if (fileToOpen != null)
+				{
+					this.soloPath = fileToOpen;
+					this.txt_soloPath.Text = fileToOpen;
+					this.btn_generateKey.Enabled = true;
+					UIUtil.SetFocus(this.btn_generateKey, this);
+				}
+			}
 		}
 
-		private void button1_Click(object sender, EventArgs e)
+		private void btn_generateKey_Click(object sender, EventArgs e)
+		{
+			SoloKeyWrapper wrapper = new SoloKeyWrapper(this.soloPath);
+
+			wrapper.createCredWithHMACExt();
+		}
+
+		private void GenerateKey()
 		{
 
 		}

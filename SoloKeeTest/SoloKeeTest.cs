@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-using SoloKeeHmac;
+using SoloKee;
 
 namespace SoloKeeTest
 {
@@ -11,7 +11,7 @@ namespace SoloKeeTest
         [TestMethod]
         public void TestGetKey()
         {
-            HMACKeyProvider provider = new HMACKeyProvider();
+            SoloKeyProvider provider = new SoloKeyProvider();
             byte[] key = provider.GetKey(null);
             Console.WriteLine(provider.Name);
             Console.WriteLine(System.Text.Encoding.UTF8.GetString(key));

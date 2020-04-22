@@ -9,19 +9,13 @@ namespace SoloKee
         private string soloCmd;
         
 
-        public SoloKeyWrapper()
+        public SoloKeyWrapper(string soloPath)
         {
-            soloCmd = getSoloCMD();
-        }
-
-        private string getSoloCMD()
-        {
-            return "F:/Users/Fubezz/AppData/Local/Programs/Python/Python38-32/Scripts/solo.exe";
+            soloCmd = soloPath;
         }
 
         private ProcessStartInfo getProcessInfo()
         {
-
             ProcessStartInfo processInfo = new ProcessStartInfo();
             processInfo.FileName = soloCmd;
             processInfo.RedirectStandardInput = true;
@@ -52,16 +46,15 @@ namespace SoloKee
             Console.WriteLine(outLine.Data);
         }
 
-        public void makeCredWithHMAC()
+        public void createCredWithHMACExt()
         {
             Process cmd = new Process();
 
             cmd.StartInfo = getProcessInfo();
-            cmd.StartInfo.Arguments = "key make-credential";
+            cmd.StartInfo.Arguments = "key wink";
             cmd.OutputDataReceived += new DataReceivedEventHandler(HandleMakeCredOutput);
             cmd.Start();
 
-        
             cmd.WaitForExit();
         }
 
