@@ -74,10 +74,10 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="src\Form\SoloKeeCreationForm.cs">
+    <Compile Include="src\form\SoloKeeCreationForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="src\Form\SoloKeeCreationForm.Designer.cs">
+    <Compile Include="src\form\SoloKeeCreationForm.Designer.cs">
       <DependentUpon>SoloKeeCreationForm.cs</DependentUpon>
     </Compile>
     <Compile Include="src\SoloKeyWrapper.cs" />
@@ -98,7 +98,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="src\Form\SoloKeeCreationForm.resx">
+    <EmbeddedResource Include="src\form\SoloKeeCreationForm.resx">
       <DependentUpon>SoloKeeCreationForm.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
