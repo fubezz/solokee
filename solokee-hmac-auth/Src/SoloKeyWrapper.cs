@@ -8,9 +8,14 @@ namespace SoloKee
     public class SoloKeyWrapper
     {
         private string soloCmd;
-        private string challenge;
-        private string credentialId;
         private static Random random = new Random();
+
+        private string challenge;
+
+        public string Challenge
+        {
+            get { return challenge; }
+        }
 
         public static string RandomString(int length)
         {
@@ -45,15 +50,15 @@ namespace SoloKee
             cmd.StartInfo = getProcessInfo();
             cmd.StartInfo.Arguments = "key wink";
             cmd.Start();
-
-            cmd.WaitForExit();
-            Console.WriteLine(cmd.StandardOutput.ReadToEnd());
+            cmd.WaitForExit(10000);
+           
         }
 
 
-        public string createCredWithHMACExt()
+        public string createCredIdHMAC()
         {
 
+            string credId = null;
             Process cmd = new Process();
             cmd.StartInfo = getProcessInfo();
             cmd.StartInfo.Arguments = "key make-credential";
@@ -62,10 +67,10 @@ namespace SoloKee
             {
                 if (!string.IsNullOrEmpty(output.Data))
                 {
-                    Console.WriteLine(output.Data);
                     if (output.Data.Length == 140 && Regex.IsMatch(output.Data, @"\A\b[0-9a-fA-F]+\b\Z"))
                     {
-                        credentialId = output.Data;
+                        Console.WriteLine(output.Data);
+                        credId = output.Data;
                     }
                 }
                 
@@ -81,21 +86,31 @@ namespace SoloKee
 
             cmd.BeginOutputReadLine();
             cmd.BeginErrorReadLine();
-
-            cmd.WaitForExit();
+            cmd.WaitForExit(10000);
             cmd.CancelOutputRead();
-            return credentialId;
+
+            if (cmd.HasExited)
+            {
+                return credId;
+            }
+            else
+            {
+                return null;
+            }
+            
             
 
         }
 
 
-        public void getChallengeResponse(string credId)
+        public string getChallengeResponse(string credId)
         {
-           
+
+            string key = null;
+
             Process cmd = new Process();
             cmd.StartInfo = getProcessInfo();
-            cmd.StartInfo.Arguments = string.Format("key challenge-response {0} {1}", credentialId, challenge);
+            cmd.StartInfo.Arguments = string.Format("key challenge-response {0} {1}", credId, challenge);
             cmd.EnableRaisingEvents = true;
             cmd.OutputDataReceived += new DataReceivedEventHandler((sender, output) =>
             {
@@ -103,10 +118,11 @@ namespace SoloKee
                 {
                     if (!string.IsNullOrEmpty(output.Data))
                     {
-                        Console.WriteLine(output.Data);
+                        
                         if (output.Data.Length == 64 && Regex.IsMatch(output.Data, @"\A\b[0-9a-fA-F]+\b\Z"))
                         {
-                            credentialId = output.Data;
+                            Console.WriteLine("Got Key: " + output.Data);
+                            key = output.Data;
                         }
                     }
                 }
@@ -124,9 +140,17 @@ namespace SoloKee
             cmd.BeginOutputReadLine();
             cmd.BeginErrorReadLine();
 
-            cmd.WaitForExit();
+            cmd.WaitForExit(10000);
             cmd.CancelOutputRead();
 
+            if (cmd.HasExited)
+            {
+                return key;
+            }
+            else
+            {
+                return null;
+            }
 
         }
     }

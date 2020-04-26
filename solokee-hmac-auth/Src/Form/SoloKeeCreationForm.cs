@@ -18,6 +18,7 @@
 */
 
 using System;
+using System.Threading;
 using System.Windows.Forms;
 
 using KeePass.UI;
@@ -28,19 +29,21 @@ namespace SoloKee.Forms
 	public partial class SoloKeeCreationForm : Form
 	{
 		private KeyProviderQueryContext m_kpContext = null;
+		private SoloKeyObject credentialObject = null;
 		private string soloPath = null;
-		private string Text = null;
-		private string key = null;
+		private string generatedCredId;
+		private string generatedKey;
+		private string challenge;
 
 		public SoloKeeCreationForm()
 		{
 			InitializeComponent();
 		}
 
-		public void InitEx (string key, KeyProviderQueryContext ctx)
+		public void InitEx (SoloKeyObject credObj, KeyProviderQueryContext ctx)
 		{
 			m_kpContext = ctx;
-			this.key = key;
+			this.credentialObject = credObj;
 
 		}
 
@@ -53,9 +56,10 @@ namespace SoloKee.Forms
 			string strDesc = "Protect the database with your solo key.";
 			Console.WriteLine(strTitle);
 
-			this.Text = strTitle;
 			BannerFactory.CreateBannerEx(this, m_bannerImage,
 				null, strTitle, strDesc);
+
+			tb_log.AppendText("Set solo application path...\r\n");
 
 			UIUtil.SetFocus(txt_soloPath, this);
 		}
@@ -69,8 +73,12 @@ namespace SoloKee.Forms
 		
 		private void OnBtnOK(object sender, EventArgs e)
 		{
-			
-			
+			if (generatedCredId != null && generatedKey != null)
+			{
+				credentialObject.credId = generatedCredId;
+				credentialObject.key = generatedKey;
+				credentialObject.challenge = challenge;
+			}	
 		}
 
 		private void OnBtnBrowse(object sender, EventArgs e)
@@ -85,23 +93,52 @@ namespace SoloKee.Forms
 				if (fileToOpen != null && fileToOpen.Contains("solo.exe")) ;
 				{
 					this.soloPath = fileToOpen;
+					tb_log.AppendText("Found library!\r\n");
 					this.txt_soloPath.Text = fileToOpen;
 					this.btn_generateKey.Enabled = true;
+					this.btn_wink.Enabled = true;
 					UIUtil.SetFocus(this.btn_generateKey, this);
 				}
 			}
 
 		}
 
-		private void btn_generateKey_Click(object sender, EventArgs e)
+		private void onBtnGenerateKey(object sender, EventArgs e)
 		{
-			SoloKeyWrapper wrapper = new SoloKeyWrapper(this.soloPath);
+			SoloKeyWrapper provider = new SoloKeyWrapper(soloPath);
+			try
+			{
+				tb_log.AppendText("Creating credential id...\r\n");
+				generatedCredId = provider.createCredIdHMAC();
+				tb_log.AppendText(generatedCredId  + "\r\n");
+				tb_log.AppendText("Creating key...\r\n");
+				generatedKey = provider.getChallengeResponse(generatedCredId);
+				if (generatedKey != null)
+				{
+					challenge = provider.Challenge;
+					tb_log.AppendText("Creating key finished!\r\n");
+					txt_keyField.Text = generatedKey;
+					btn_ok.Enabled = true;
+				}
+			}
+			catch (Exception ex)
+			{
+				tb_log.Text = ex.Message;
 
-			wrapper.createCredWithHMACExt();
+			}
 		}
 
-		private void GenerateKey()
+		private void OnBtnWink(object sender, EventArgs e)
 		{
+			try { 
+				tb_log.Text = "Your solo key should blink...\r\n";
+				SoloKeyWrapper provider = new SoloKeyWrapper(soloPath);
+				provider.wink();
+			}
+			catch (Exception ex)
+			{
+				tb_log.Text = ex.Message;
+			}
 
 		}
 	}

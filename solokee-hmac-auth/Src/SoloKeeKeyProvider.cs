@@ -7,6 +7,13 @@ using SoloKee.Forms;
 
 namespace SoloKee
 {
+	public class SoloKeyObject
+	{
+		public string credId;
+		public string key;
+		internal object challenge;
+	}
+
 	public sealed class SoloKeyProvider : KeyProvider
 	{
 		public override string Name
@@ -47,14 +54,14 @@ namespace SoloKee
 			//if (otpInfo == null) otpInfo = new OtpInfo();
 
 			SoloKeeCreationForm dlg = new SoloKeeCreationForm();
-			string key = "test";
-			dlg.InitEx(key,ctx);
+			SoloKeyObject creadentialObject = new SoloKeyObject();
+			dlg.InitEx(creadentialObject,ctx);
 			//dlg.InitEx(otpInfo, ctx);
 
 			if (UIUtil.ShowDialogAndDestroy(dlg) != DialogResult.OK)
 				return null;
 			else
-				return new System.Text.UTF8Encoding().GetBytes(key);
+				return new System.Text.UTF8Encoding().GetBytes(creadentialObject.key);
 		}
 
 	}

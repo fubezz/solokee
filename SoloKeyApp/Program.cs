@@ -10,10 +10,11 @@ namespace SoloKeyApp
             SoloKeyWrapper provider = new SoloKeyWrapper("D:/Program Files (x86)/Python/Scripts/solo.exe");
             try
             {
-                string credId = provider.createCredWithHMACExt();
+                string credId = provider.createCredIdHMAC();
                 Console.WriteLine("----");
                 Console.WriteLine(credId);
-                provider.getChallengeResponse(credId);
+                string key = provider.getChallengeResponse(credId);
+                Console.WriteLine(key);
             }
             catch(Exception e)
             {
